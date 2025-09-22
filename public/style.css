@@ -1,86 +1,90 @@
 /* Общие стили */
-body {
-  font-family: 'Arial', sans-serif;
-  background: #f4f4f4;
-  text-align: center;
+body, html {
   margin: 0;
   padding: 0;
-  line-height: 1.6;
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
 }
 
 header {
   background: #222;
   color: white;
-  padding: 20px;
+  padding: 15px;
   font-size: 1.5rem;
-  font-weight: bold;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  text-align: center;
 }
 
 /* Контейнер фото */
 .photo-container {
-  margin: 20px auto;
-  max-width: 600px;
-  padding: 10px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-img {
   width: 100%;
-  height: auto;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  margin: 0;
+  padding: 0;
 }
 
-/* Кнопки */
-.btn, button {
+img#photo {
+  width: 100%;
+  height: auto; /* сохраняем пропорции */
+  display: block;
+}
+
+/* Кнопка */
+.btn {
   display: inline-block;
-  margin-top: 20px;
+  margin: 20px auto;
   padding: 12px 24px;
   background: #007BFF;
   color: white;
   text-decoration: none;
   border-radius: 8px;
   font-size: 1rem;
-  transition: background 0.3s, transform 0.2s;
-  cursor: pointer;
+  transition: 0.3s;
 }
 
-.btn:hover, button:hover {
+.btn:hover {
   background: #0056b3;
-  transform: translateY(-2px);
 }
 
 /* Форма */
 form {
-  margin-top: 30px;
-  background: white;
+  margin: 20px auto;
   padding: 20px;
   max-width: 400px;
-  margin-left: auto;
-  margin-right: auto;
+  background: white;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 input[type="file"] {
-  margin: 10px 0;
-  padding: 10px;
-  font-size: 16px;
   width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #0056b3;
 }
 
 /* Ссылка "назад" */
 .back {
   margin-top: 20px;
+  text-align: center;
 }
 
 .back a {
-  text-decoration: none;
   color: #007BFF;
-  font-size: 16px;
+  text-decoration: none;
 }
 
 .back a:hover {
@@ -91,35 +95,20 @@ input[type="file"] {
 @media (max-width: 768px) {
   header {
     font-size: 1.3rem;
-    padding: 15px;
-  }
-
-  .photo-container, form {
-    margin: 15px;
-    padding: 15px;
-  }
-
-  .btn, button {
-    width: 80%;
-    font-size: 1rem;
     padding: 12px;
+  }
+  form {
+    width: 90%;
+    padding: 15px;
   }
 }
 
 @media (max-width: 480px) {
   header {
     font-size: 1.1rem;
-    padding: 12px;
   }
-
-  .photo-container, form {
-    margin: 10px;
-    padding: 10px;
-  }
-
-  .btn, button {
-    width: 100%;
-    font-size: 0.95rem;
+  form {
+    width: 95%;
     padding: 10px;
   }
 }
