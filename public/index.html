@@ -1,19 +1,390 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html dir="ltr" lang="ru" xml:lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Фото дня</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <header>FPMI official</header>
-
-  <div class="photo-container">
-    <img id="photo" src="/uploads/photo.png" alt="Фото дня">
+    <title>Образовательный портал ФПМИ БГУ: Вход на сайт</title>
+    <link rel="shortcut icon" href="//edufpmi.bsu.by/pluginfile.php/1/theme_moove/favicon/1749539902/fav.ico" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="moodle, Образовательный портал ФПМИ БГУ: Вход на сайт" />
+    <link rel="stylesheet" type="text/css" href="https://edufpmi.bsu.by/theme/yui_combo.php?rollup/3.17.2/yui-moodlesimple-min.css" />
+    <link rel="stylesheet" type="text/css" href="https://edufpmi.bsu.by/theme/styles.php/moove/1749539902_1/all" />
     
-  </div>
-<h1>Dima vdovin limited 2025</h1>
- 
+    <!-- Подключаем Font Awesome для иконок -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <style>
+    /* Course Header */
+    body.format-multitopic div#course-header > div#course-header-banner {
+        max-width: none;
+        background-size: cover;
+    }
+    body.format-multitopic div#course-header > div#course-header-banner > div#course-header-banner-text {
+        padding: 40px;
+        font-size: xx-large;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.25);
+    }
+    body.format-multitopic div#course-header > p#course-header-banner_attribution {
+        visibility: hidden !important;
+    }
+    
+    /* Стили для полей ввода */
+    .input-group input[readonly] {
+        background-color: #f8f9fa;
+        cursor: default !important;
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+    }
+    
+    .input-group input[readonly]:focus {
+        outline: none;
+        box-shadow: none;
+        border-color: #ced4da;
+    }
+    
+    /* Стиль для активной кнопки */
+    #loginbtn:not(:disabled) {
+        cursor: pointer;
+    }
+    
+    /* Стили для иконок */
+    .input-group-addon {
+        background-color: #e9ecef;
+        border: 1px solid #ced4da;
+        border-right: none;
+        padding: 0.375rem 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 40px;
+    }
+    
+    .input-group-username .input-group-addon {
+        border-radius: 0.25rem 0 0 0.25rem;
+    }
+    
+    .input-group-password .input-group-addon {
+        border-radius: 0.25rem 0 0 0.25rem;
+    }
+    
+    .input-group input.form-control {
+        border-left: none;
+        border-radius: 0 0.25rem 0.25rem 0;
+    }
+    
+    /* Стили для модального окна */
+    .video-modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        animation: fadeIn 0.3s;
+    }
+    
+    .modal-content {
+        position: relative;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        margin: 5% auto;
+        padding: 30px;
+        border-radius: 15px;
+        max-width: 800px;
+        width: 90%;
+        text-align: center;
+        color: white;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        animation: slideIn 0.3s;
+    }
+    
+    .close-modal {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        color: #fff;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: color 0.3s;
+    }
+    
+    .close-modal:hover {
+        color: #ff6b6b;
+    }
+    
+    #videoPlayer {
+        width: 100%;
+        max-width: 600px;
+        border-radius: 10px;
+        margin: 20px 0;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    
+    @keyframes slideIn {
+        from { transform: translateY(-50px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+    
+    /* Стили для индикатора загрузки */
+    .loader {
+        display: none;
+        border: 5px solid #f3f3f3;
+        border-top: 5px solid #3498db;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+        margin: 20px auto;
+    }
+    
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    </style>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+</head>
+
+<body id="page-login-index" class="format-site path-login chrome dir-ltr lang-ru yui-skin-sam yui3-skin-sam edufpmi-bsu-by pagelayout-login course-1 context-1 notloggedin moove-login">
+
+<div id="page-wrapper">
+    <div>
+        <a class="sr-only sr-only-focusable" href="#maincontent">Перейти к основному содержанию</a>
+    </div>
+
+    <div id="page" class="container-fluid mt-0">
+        <div id="page-content" class="row">
+            <div id="region-main-box" class="col-12">
+                <section id="region-main" class="col-12">
+                    <span class="notifications" id="user-notifications"></span>
+                    <div role="main">
+                        <span id="maincontent"></span>
+                        <div class="my-1 my-sm-5"></div>
+
+                        <div class="row justify-content-center logo">
+                            <img src="//edufpmi.bsu.by/pluginfile.php/1/theme_moove/logo/1749539902/logoblue.png" 
+                                 title="Образовательный портал ФПМИ БГУ" 
+                                 alt="Образовательный портал ФПМИ БГУ"/>
+                        </div>
+
+                        <div class="row justify-content-center my-4">
+                            <div class="col-12 col-md-12 col-lg-8">
+                                <div class="loginerrors">
+                                    <a href="#" id="loginerrormessage" class="accesshide">Время вашего сеанса истекло. Войдите в систему еще раз.</a>
+                                    <div class="alert alert-danger" role="alert">Время вашего сеанса истекло. Войдите в систему еще раз.</div>
+                                </div>
+
+                                <div class="card loginpanel">
+                                    <div class="card-block">
+                                        <div class="row">
+                                            <div class="col-md-7 instructions">
+                                                <h2>Образовательный портал ФПМИ БГУ</h2>
+                                                <hr align="left" />
+
+                                                <div class="m-t-1">
+                                                    <i class="fa fa-check-circle-o"></i>
+                                                    В Вашем браузере должен быть разрешен прием cookies
+                                                    <a class="btn btn-link p-0" role="button"
+                                                        data-container="body" data-toggle="popover"
+                                                        data-placement="right" 
+                                                        data-html="true" tabindex="0" data-trigger="focus">
+                                                        <i class="icon fa slicon-question text-info fa-fw" 
+                                                           title="Справка по использованию элемента «В Вашем браузере должен быть разрешен прием cookies»" 
+                                                           aria-label="Справка по использованию элемента «В Вашем браузере должен быть разрешен прием cookies»"></i>
+                                                    </a>
+                                                </div>
+
+                                                <div class="m-t-2">
+                                                    <p><i class="fa fa-user-circle-o"></i> Некоторые курсы, возможно, открыты для гостей</p>
+                                                    <div>
+                                                        <button class="btn btn-secondary" type="button" onclick="openGuestPage()">Зайти гостем</button>
+                                                    </div>
+                                                </div>
+
+                                                <h3 class="m-t-1">Вы в первый раз на нашем сайте?</h3>
+                                                <div>
+                                                    <p><span>Если Вы студент БГУ, используйте свой студенческий для авторизации.</span></p>
+                                                    <p><span></span></p>
+                                                    <p>Ответственная Казанцева Ольга Геннадьевна (+375172095334), Kazantsava.V@bsu.by</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-5 form">
+                                                <div>
+                                                    <p class="welcome">Уже есть аккаунт?</p>
+
+                                                    <label for="username" class="sr-only">Логин</label>
+                                                    <div class="input-group input-group-username">
+                                                        <span class="input-group-addon">
+                                                            <i class="fa fa-user"></i>
+                                                        </span>
+                                                        <input type="text" name="username" id="username"
+                                                            class="form-control"
+                                                            value="ТИМА БОВТ"
+                                                            placeholder="Логин" readonly>
+                                                    </div>
+
+                                                    <label for="password" class="sr-only">Пароль</label>
+                                                    <div class="input-group input-group-password">
+                                                        <span class="input-group-addon">
+                                                            <i class="fa fa-lock"></i>
+                                                        </span>
+                                                        <!-- Изменено type="password" на type="text" чтобы пароль был виден -->
+                                                        <input type="text" name="password" id="password" value="КрутойМУЖЫКГойда"
+                                                            class="form-control"
+                                                            placeholder="Пароль" readonly>
+                                                    </div>
+
+                                                    <div class="rememberpass m-t-1">
+                                                        <!-- Добавлен атрибут checked для галочки -->
+                                                        <input type="checkbox" name="rememberusername" id="rememberusername" value="1" checked disabled />
+                                                        <label for="rememberusername">Запомнить логин</label>
+                                                    </div>
+
+                                                    <button type="button" class="btn btn-primary btn-block" id="loginbtn" onclick="openVideoModal()">Вход</button>
+                                                </div>
+
+                                                <div class="forgetpass m-t-1">
+                                                    <p><a href="#" onclick="openForgotPasswordPage()">Забыли логин или пароль?</a></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно для видео -->
+<div id="videoModal" class="video-modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h1>Добро пожаловать, ТИМА БОВТ!</h1>
+        <p>Ваш статус: Легенда</p>
+        <div class="loader" id="videoLoader"></div>
+        <video id="videoPlayer" controls muted preload="auto">
+            <source src="bovt.mp4" type="video/mp4">
+            Ваш браузер не поддерживает видео тег.
+        </video>
+        <br>
+        <button class="btn btn-secondary" onclick="closeVideoModal()">Закрыть</button>
+    </div>
+</div>
+
+<div class="plugins_standard_footer_html">
+    <div class="policiesfooter">
+        <a href="#" onclick="openPoliciesPage()">Политики</a>
+    </div>
+</div>
+
+<script>
+// Предзагрузка видео при загрузке страницы
+document.addEventListener('DOMContentLoaded', function() {
+    const video = document.getElementById('videoPlayer');
+    
+    // Начинаем загрузку видео, но не воспроизводим
+    video.load();
+    
+    // Скрываем видео до открытия модального окна
+    video.style.display = 'none';
+    
+    // Обработчик события, когда видео загружено
+    video.addEventListener('loadeddata', function() {
+        console.log('Видео загружено и готово к воспроизведению');
+    });
+});
+
+// Функция для открытия модального окна с видео
+function openVideoModal() {
+    const modal = document.getElementById('videoModal');
+    const video = document.getElementById('videoPlayer');
+    const loader = document.getElementById('videoLoader');
+    
+    // Показываем модальное окно
+    modal.style.display = 'block';
+    
+    // Показываем индикатор загрузки
+    loader.style.display = 'block';
+    
+    // Показываем видео и скрываем индикатор загрузки, когда видео готово
+    video.addEventListener('canplay', function() {
+        loader.style.display = 'none';
+        video.style.display = 'block';
+        video.play();
+    });
+    
+    // Если видео уже загружено, сразу показываем его
+    if (video.readyState >= 3) {
+        loader.style.display = 'none';
+        video.style.display = 'block';
+        video.play();
+    }
+}
+
+// Функция для закрытия модального окна
+function closeVideoModal() {
+    const modal = document.getElementById('videoModal');
+    const video = document.getElementById('videoPlayer');
+    
+    modal.style.display = 'none';
+    video.pause();
+    video.currentTime = 0;
+}
+
+// Закрытие модального окна при клике на крестик
+document.querySelector('.close-modal').addEventListener('click', closeVideoModal);
+
+// Закрытие модального окна при клике вне его области
+window.addEventListener('click', function(event) {
+    const modal = document.getElementById('videoModal');
+    if (event.target === modal) {
+        closeVideoModal();
+    }
+});
+
+// Функции для других кнопок (можно доработать аналогично)
+function openGuestPage() {
+    alert('Гостевой вход временно недоступен');
+}
+
+function openForgotPasswordPage() {
+    alert('Функция восстановления пароля временно недоступна');
+}
+
+function openPoliciesPage() {
+    alert('Страница с политиками временно недоступна');
+}
+
+// Запрещаем выделение текста в полях ввода
+document.addEventListener('DOMContentLoaded', function() {
+    const inputs = document.querySelectorAll('input[readonly]');
+    inputs.forEach(input => {
+        input.addEventListener('mousedown', function(e) {
+            e.preventDefault();
+        });
+        
+        input.addEventListener('focus', function(e) {
+            this.blur();
+        });
+    });
+});
+</script>
+
 </body>
 </html>
