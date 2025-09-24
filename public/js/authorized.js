@@ -1,5 +1,5 @@
 // JavaScript для страницы authorizedPage.html
-const TOTAL_PHOTOS = 4; // Количество ваших фотографий
+const TOTAL_PHOTOS = 6; // Количество ваших фотографий
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Начало загрузки страницы');
