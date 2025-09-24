@@ -8,30 +8,30 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Добро пожаловать, ТИМА БОВТ!</h1>
-        <p class="status">Ваш статус: Легенда</p>
+    <!-- Фон из мозаики фотографий -->
+    <div id="mosaicBackground" class="mosaic-background"></div>
+    
+    <!-- Основной контент -->
+    <div class="main-content">
+        <div class="welcome-text">
+            <h1>Вход выполнен</h1>
+            <h2>Тима Бовт мы любим тебя!!!!!</h2>
+            <div class="access-level">Уровень доступа: <span class="legend">легенда</span></div>
+        </div>
         
         <div class="video-container">
-            <div class="loader" id="videoLoader"></div>
-            <video id="videoPlayer" controls muted preload="auto" style="display: none;">
+            <video id="videoPlayer" autoplay muted loop controls>
                 <source src="bovt.mp4" type="video/mp4">
                 Ваш браузер не поддерживает видео тег.
             </video>
-        </div>
-        
-        <div class="user-info">
-            <p><i class="fa fa-user"></i> Пользователь: ТИМА БОВТ</p>
-            <p><i class="fa fa-star"></i> Уровень доступа: Администратор</p>
-            <p><i class="fa fa-clock-o"></i> Последний вход: только что</p>
         </div>
         
         <div class="controls">
             <button class="btn" id="backBtn">
                 <i class="fa fa-arrow-left"></i> Вернуться на главную
             </button>
-            <button class="btn" onclick="location.reload()">
-                <i class="fa fa-refresh"></i> Перезагрузить видео
+            <button class="btn" onclick="toggleSound()" id="soundBtn">
+                <i class="fa fa-volume-off"></i> Включить звук
             </button>
         </div>
     </div>

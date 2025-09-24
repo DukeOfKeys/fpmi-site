@@ -1,55 +1,133 @@
 // JavaScript для страницы authorizedPage.html
+// Количество фотографий для мозаики - измени это число в зависимости от количества файлов
+const TOTAL_PHOTOS = 20; // Укажи здесь общее количество фотографий в папке assets
 
 document.addEventListener('DOMContentLoaded', function() {
     const video = document.getElementById('videoPlayer');
-    const loader = document.getElementById('videoLoader');
     const backBtn = document.getElementById('backBtn');
+    const soundBtn = document.getElementById('soundBtn');
     
-    // Показываем индикатор загрузки
-    loader.style.display = 'block';
+    // Создаем мозаичный фон
+    createMosaicBackground();
     
-    // Автоматически начинаем загрузку и воспроизведение видео
-    video.addEventListener('canplay', function() {
-        loader.style.display = 'none';
-        video.style.display = 'block';
-        video.play().catch(function(error) {
+    // Настраиваем видео
+    setupVideo();
+    
+    // Настраиваем кнопки
+    setupButtons();
+    
+    // Функция создания мозаичного фона
+    function createMosaicBackground() {
+        const mosaicContainer = document.getElementById('mosaicBackground');
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        
+        // Рассчитываем количество ячеек для заполнения экрана
+        const cellSize = 80; // размер ячейки в пикселях
+        const cols = Math.ceil(viewportWidth / cellSize) + 2;
+        const rows = Math.ceil(viewportHeight / cellSize) + 2;
+        const totalCells = cols * rows;
+        
+        // Создаем массив с номерами фотографий в случайном порядке
+        let photoNumbers = [];
+        for (let i = 0; i < totalCells; i++) {
+            // Используем модуль для циклического повторения фотографий
+            photoNumbers.push((i % TOTAL_PHOTOS) + 1);
+        }
+        
+        // Перемешиваем массив для случайного порядка
+        photoNumbers = shuffleArray(photoNumbers);
+        
+        // Создаем ячейки мозаики
+        for (let i = 0; i < totalCells; i++) {
+            const mosaicItem = document.createElement('div');
+            mosaicItem.className = 'mosaic-item';
+            mosaicItem.style.backgroundImage = `url('assets/${photoNumbers[i]}.jpg')`;
+            mosaicContainer.appendChild(mosaicItem);
+        }
+    }
+    
+    // Функция перемешивания массива
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+    
+    // Функция настройки видео
+    function setupVideo() {
+        // Пытаемся включить автовоспроизведение со звуком
+        video.muted = false;
+        
+        video.play().then(() => {
+            console.log('Видео воспроизводится автоматически');
+            soundBtn.innerHTML = '<i class="fa fa-volume-up"></i> Выключить звук';
+        }).catch(error => {
             console.log('Автовоспроизведение заблокировано: ', error);
-            // Показываем кнопку для ручного запуска
-            const playBtn = document.createElement('button');
-            playBtn.className = 'btn';
-            playBtn.textContent = 'Начать просмотр';
-            playBtn.onclick = function() {
-                video.play();
-                playBtn.style.display = 'none';
-            };
-            video.parentNode.appendChild(playBtn);
+            // Если автовоспроизведение заблокировано, пробуем с muted
+            video.muted = true;
+            video.play();
+            soundBtn.innerHTML = '<i class="fa fa-volume-off"></i> Включить звук';
         });
-    });
-    
-    // Обработчик ошибок видео
-    video.addEventListener('error', function() {
-        loader.style.display = 'none';
-        const errorMsg = document.createElement('p');
-        errorMsg.textContent = 'Ошибка загрузки видео. Пожалуйста, проверьте подключение к интернету.';
-        errorMsg.style.color = '#ff6b6b';
-        video.parentNode.appendChild(errorMsg);
-    });
-    
-    // Кнопка "Назад" возвращает на главную страницу
-    if (backBtn) {
-        backBtn.addEventListener('click', function() {
-            window.location.href = 'index.html';
+        
+        // Обработчик ошибок видео
+        video.addEventListener('error', function() {
+            console.error('Ошибка загрузки видео');
+        });
+        
+        // Обработчик окончания видео (для цикла)
+        video.addEventListener('ended', function() {
+            video.currentTime = 0;
+            video.play();
         });
     }
     
-    // Добавляем информацию о прогрессе загрузки
-    video.addEventListener('progress', function() {
-        const buffered = video.buffered;
-        if (buffered.length > 0) {
-            const loaded = (buffered.end(0) / video.duration) * 100;
-            if (!isNaN(loaded)) {
-                console.log('Загружено: ' + loaded.toFixed(1) + '%');
-            }
+    // Функция настройки кнопок
+    function setupButtons() {
+        // Кнопка "Назад"
+        if (backBtn) {
+            backBtn.addEventListener('click', function() {
+                window.location.href = 'index.html';
+            });
         }
+        
+        // Кнопка звука
+        if (soundBtn) {
+            soundBtn.addEventListener('click', toggleSound);
+        }
+    }
+    
+    // Функция переключения звука
+    function toggleSound() {
+        if (video.muted) {
+            video.muted = false;
+            soundBtn.innerHTML = '<i class="fa fa-volume-up"></i> Выключить звук';
+        } else {
+            video.muted = true;
+            soundBtn.innerHTML = '<i class="fa fa-volume-off"></i> Включить звук';
+        }
+    }
+    
+    // Обработчик изменения размера окна
+    window.addEventListener('resize', function() {
+        // При изменении размера окна можно пересоздать мозаику
+        // Но для производительности лучше этого не делать часто
+        // Можно добавить debounce при необходимости
     });
 });
+
+// Глобальная функция для переключения звука (если нужна извне)
+window.toggleSound = function() {
+    const video = document.getElementById('videoPlayer');
+    const soundBtn = document.getElementById('soundBtn');
+    
+    if (video.muted) {
+        video.muted = false;
+        soundBtn.innerHTML = '<i class="fa fa-volume-up"></i> Выключить звук';
+    } else {
+        video.muted = true;
+        soundBtn.innerHTML = '<i class="fa fa-volume-off"></i> Включить звук';
+    }
+};
