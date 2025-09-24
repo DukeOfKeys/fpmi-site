@@ -1,6 +1,6 @@
 // JavaScript для страницы authorizedPage.html
-// Количество фотографий для мозаики - измени это число в зависимости от количества файлов
-const TOTAL_PHOTOS = 4; // Укажи здесь общее количество фотографий в папке assets
+// Указываем реальное количество фотографий в папке assets
+const TOTAL_PHOTOS = 4; // Измени это число на количество ваших фотографий
 
 document.addEventListener('DOMContentLoaded', function() {
     const video = document.getElementById('videoPlayer');
@@ -19,41 +19,48 @@ document.addEventListener('DOMContentLoaded', function() {
     // Функция создания мозаичного фона
     function createMosaicBackground() {
         const mosaicContainer = document.getElementById('mosaicBackground');
-        const viewportWidth = window.innerWidth;
-        const viewportHeight = window.innerHeight;
+        
+        // Очищаем контейнер
+        mosaicContainer.innerHTML = '';
         
         // Рассчитываем количество ячеек для заполнения экрана
         const cellSize = 80; // размер ячейки в пикселях
-        const cols = Math.ceil(viewportWidth / cellSize) + 2;
-        const rows = Math.ceil(viewportHeight / cellSize) + 2;
+        const cols = Math.ceil(window.innerWidth / cellSize) + 2;
+        const rows = Math.ceil(window.innerHeight / cellSize) + 2;
         const totalCells = cols * rows;
+        
+        console.log(`Создаем мозаику: ${cols}x${rows} = ${totalCells} ячеек, фото: ${TOTAL_PHOTOS}`);
         
         // Создаем массив с номерами фотографий в случайном порядке
         let photoNumbers = [];
-        for (let i = 0; i < totalCells; i++) {
-            // Используем модуль для циклического повторения фотографий
-            photoNumbers.push((i % TOTAL_PHOTOS) + 1);
-        }
         
-        // Перемешиваем массив для случайного порядка
-        photoNumbers = shuffleArray(photoNumbers);
+        // Заполняем массив случайными номерами фотографий
+        for (let i = 0; i < totalCells; i++) {
+            // Генерируем случайный номер от 1 до TOTAL_PHOTOS
+            const randomPhotoNum = Math.floor(Math.random() * TOTAL_PHOTOS) + 1;
+            photoNumbers.push(randomPhotoNum);
+        }
         
         // Создаем ячейки мозаики
         for (let i = 0; i < totalCells; i++) {
             const mosaicItem = document.createElement('div');
             mosaicItem.className = 'mosaic-item';
-            mosaicItem.style.backgroundImage = `url('assets/${photoNumbers[i]}.jpg')`;
+            
+            // Пробуем разные расширения файлов
+            const imageUrl = `assets/${photoNumbers[i]}.jpg`;
+            mosaicItem.style.backgroundImage = `url('${imageUrl}')`;
+            
+            // Добавляем обработчик ошибки загрузки изображения
+            mosaicItem.onerror = function() {
+                console.error(`Ошибка загрузки изображения: ${imageUrl}`);
+                // Если jpg не загрузилось, пробуем png
+                this.style.backgroundImage = `url('assets/${photoNumbers[i]}.png')`;
+            };
+            
             mosaicContainer.appendChild(mosaicItem);
         }
-    }
-    
-    // Функция перемешивания массива
-    function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-        return array;
+        
+        console.log('Мозаика создана');
     }
     
     // Функция настройки видео
@@ -63,13 +70,18 @@ document.addEventListener('DOMContentLoaded', function() {
         
         video.play().then(() => {
             console.log('Видео воспроизводится автоматически');
-            soundBtn.innerHTML = '<i class="fa fa-volume-up"></i> Выключить звук';
+            if (soundBtn) {
+                soundBtn.innerHTML = '<i class="fa fa-volume-up"></i> Выключить звук';
+            }
         }).catch(error => {
             console.log('Автовоспроизведение заблокировано: ', error);
             // Если автовоспроизведение заблокировано, пробуем с muted
             video.muted = true;
-            video.play();
-            soundBtn.innerHTML = '<i class="fa fa-volume-off"></i> Включить звук';
+            video.play().then(() => {
+                if (soundBtn) {
+                    soundBtn.innerHTML = '<i class="fa fa-volume-off"></i> Включить звук';
+                }
+            });
         });
         
         // Обработчик ошибок видео
@@ -103,31 +115,38 @@ document.addEventListener('DOMContentLoaded', function() {
     function toggleSound() {
         if (video.muted) {
             video.muted = false;
-            soundBtn.innerHTML = '<i class="fa fa-volume-up"></i> Выключить звук';
+            if (soundBtn) {
+                soundBtn.innerHTML = '<i class="fa fa-volume-up"></i> Выключить звук';
+            }
         } else {
             video.muted = true;
-            soundBtn.innerHTML = '<i class="fa fa-volume-off"></i> Включить звук';
+            if (soundBtn) {
+                soundBtn.innerHTML = '<i class="fa fa-volume-off"></i> Включить звук';
+            }
         }
     }
     
     // Обработчик изменения размера окна
     window.addEventListener('resize', function() {
-        // При изменении размера окна можно пересоздать мозаику
-        // Но для производительности лучше этого не делать часто
-        // Можно добавить debounce при необходимости
+        // Пересоздаем мозаику при изменении размера окна
+        createMosaicBackground();
     });
 });
 
-// Глобальная функция для переключения звука (если нужна извне)
+// Глобальная функция для переключения звука
 window.toggleSound = function() {
     const video = document.getElementById('videoPlayer');
     const soundBtn = document.getElementById('soundBtn');
     
-    if (video.muted) {
+    if (video && video.muted) {
         video.muted = false;
-        soundBtn.innerHTML = '<i class="fa fa-volume-up"></i> Выключить звук';
-    } else {
+        if (soundBtn) {
+            soundBtn.innerHTML = '<i class="fa fa-volume-up"></i> Выключить звук';
+        }
+    } else if (video) {
         video.muted = true;
-        soundBtn.innerHTML = '<i class="fa fa-volume-off"></i> Включить звук';
+        if (soundBtn) {
+            soundBtn.innerHTML = '<i class="fa fa-volume-off"></i> Включить звук';
+        }
     }
 };
