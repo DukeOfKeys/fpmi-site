@@ -1,15 +1,40 @@
-// Теперь этот файл содержит только базовые функции для index.html
+// JavaScript для страницы index.html
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Запрещаем выделение текста в полях ввода
+    // Разрешаем выделение текста в полях ввода, но запрещаем изменение
     const inputs = document.querySelectorAll('input[readonly]');
+    
     inputs.forEach(input => {
+        // Разрешаем все события мыши для выделения текста
         input.addEventListener('mousedown', function(e) {
-            e.preventDefault();
+            // Разрешаем стандартное поведение для выделения текста
+        });
+        
+        input.addEventListener('click', function(e) {
+            // Выделяем весь текст при клике для удобства копирования
+            this.select();
         });
         
         input.addEventListener('focus', function(e) {
-            this.blur();
+            // При фокусе выделяем весь текст
+            this.select();
+        });
+        
+        // Запрещаем ввод текста
+        input.addEventListener('keydown', function(e) {
+            e.preventDefault();
+        });
+        
+        input.addEventListener('paste', function(e) {
+            e.preventDefault();
+        });
+        
+        input.addEventListener('cut', function(e) {
+            e.preventDefault();
+        });
+        
+        input.addEventListener('dragstart', function(e) {
+            e.preventDefault();
         });
     });
 });
