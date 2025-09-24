@@ -9,68 +9,60 @@
 body {
     font-family: 'Arial', sans-serif;
     color: white;
-    text-align: center;
     min-height: 100vh;
     overflow: hidden;
     position: relative;
 }
 
-/* Фон из мозаики */
+/* Фон из мозаики - ЗАДНИЙ ПЛАН */
 .mosaic-background {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-    grid-auto-rows: minmax(80px, 1fr);
-    gap: 2px;
-    z-index: -1;
-    padding: 2px;
+    display: flex;
+    flex-wrap: wrap;
+    z-index: 1; /* Фон находится позади основного контента */
     background: #000; /* Фон на случай если фото не загрузятся */
 }
 
 .mosaic-item {
-    width: 100%;
-    height: 100%;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    border-radius: 4px;
-    opacity: 0.7;
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
 }
 
 .mosaic-item:hover {
-    opacity: 0.9;
-    transform: scale(1.05);
-    z-index: 1;
+    opacity: 1;
 }
 
-/* Основной контент */
+/* Основной контент - ПЕРЕДНИЙ ПЛАН */
 .main-content {
     position: relative;
-    z-index: 2;
+    z-index: 2; /* Основной контент поверх фона */
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 20px;
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(5px);
+    text-align: center;
+    background: rgba(0, 0, 0, 0.6); /* Полупрозрачный фон для лучшей читаемости */
+    backdrop-filter: blur(1px);
 }
 
 /* Приветственный текст */
 .welcome-text {
     margin-bottom: 40px;
-    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .welcome-text h1 {
-    font-size: 4rem;
-    margin-bottom: 10px;
+    font-size: 3.5rem;
+    margin-bottom: 15px;
     background: linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -80,30 +72,30 @@ body {
 }
 
 .welcome-text h2 {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     margin-bottom: 20px;
     color: #feca57;
 }
 
 .access-level {
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: bold;
 }
 
 .legend {
     color: #ffd700;
-    text-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700;
+    text-shadow: 0 0 10px #ffd700;
     animation: glow 2s ease-in-out infinite alternate;
 }
 
 /* Контейнер видео */
 .video-container {
     margin: 30px 0;
-    max-width: 800px;
+    max-width: 700px;
     width: 90%;
-    border-radius: 20px;
+    border-radius: 15px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
     border: 3px solid rgba(255, 255, 255, 0.3);
 }
 
@@ -116,9 +108,9 @@ body {
 
 /* Кнопки управления */
 .controls {
-    margin-top: 30px;
+    margin-top: 25px;
     display: flex;
-    gap: 20px;
+    gap: 15px;
     flex-wrap: wrap;
     justify-content: center;
 }
@@ -127,26 +119,20 @@ body {
     background: linear-gradient(45deg, #667eea, #764ba2);
     color: white;
     border: none;
-    padding: 15px 30px;
+    padding: 12px 25px;
     border-radius: 50px;
-    font-size: 1.1rem;
+    font-size: 1rem;
     cursor: pointer;
     transition: all 0.3s ease;
-    text-decoration: none;
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    gap: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-    background: linear-gradient(45deg, #764ba2, #667eea);
-}
-
-.btn:active {
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
 }
 
 /* Анимации */
@@ -157,15 +143,15 @@ body {
 }
 
 @keyframes glow {
-    from { text-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700; }
-    to { text-shadow: 0 0 20px #ffd700, 0 0 30px #ffd700, 0 0 40px #ffd700; }
+    from { text-shadow: 0 0 10px #ffd700; }
+    to { text-shadow: 0 0 20px #ffd700, 0 0 30px #ffd700; }
 }
 
 /* Адаптивность */
 @media (max-width: 768px) {
-    .mosaic-background {
-        grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
-        grid-auto-rows: minmax(60px, 1fr);
+    .mosaic-item {
+        width: 50px !important;
+        height: 50px !important;
     }
     
     .welcome-text h1 {
@@ -177,7 +163,7 @@ body {
     }
     
     .access-level {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
     }
     
     .video-container {
@@ -191,15 +177,15 @@ body {
     
     .btn {
         width: 100%;
-        max-width: 300px;
+        max-width: 250px;
         justify-content: center;
     }
 }
 
 @media (max-width: 480px) {
-    .mosaic-background {
-        grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
-        grid-auto-rows: minmax(40px, 1fr);
+    .mosaic-item {
+        width: 40px !important;
+        height: 40px !important;
     }
     
     .welcome-text h1 {
@@ -215,6 +201,6 @@ body {
     }
     
     .main-content {
-        padding: 10px;
+        padding: 15px;
     }
 }
