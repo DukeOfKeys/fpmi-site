@@ -1,6 +1,6 @@
 // JavaScript для страницы authorizedPage.html
 // Количество фотографий для мозаики - измени это число в зависимости от количества файлов
-const TOTAL_PHOTOS = 20; // Укажи здесь общее количество фотографий в папке assets
+const TOTAL_PHOTOS = 4; // Укажи здесь общее количество фотографий в папке assets
 
 document.addEventListener('DOMContentLoaded', function() {
     const video = document.getElementById('videoPlayer');
