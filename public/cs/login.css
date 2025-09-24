@@ -1,0 +1,62 @@
+/* Course Header */
+body.format-multitopic div#course-header > div#course-header-banner {
+    max-width: none;
+    background-size: cover;
+}
+body.format-multitopic div#course-header > div#course-header-banner > div#course-header-banner-text {
+    padding: 40px;
+    font-size: xx-large;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.25);
+}
+body.format-multitopic div#course-header > p#course-header-banner_attribution {
+    visibility: hidden !important;
+}
+
+/* Стили для полей ввода */
+.input-group input[readonly] {
+    background-color: #f8f9fa;
+    cursor: default !important;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.input-group input[readonly]:focus {
+    outline: none;
+    box-shadow: none;
+    border-color: #ced4da;
+}
+
+/* Стиль для активной кнопки */
+#loginbtn:not(:disabled) {
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+}
+
+/* Стили для иконок */
+.input-group-addon {
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    border-right: none;
+    padding: 0.375rem 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+}
+
+.input-group-username .input-group-addon {
+    border-radius: 0.25rem 0 0 0.25rem;
+}
+
+.input-group-password .input-group-addon {
+    border-radius: 0.25rem 0 0 0.25rem;
+}
+
+.input-group input.form-control {
+    border-left: none;
+    border-radius: 0 0.25rem 0.25rem 0;
+}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добро пожаловать, ТИМА БОВТ!</title>
+    <link rel="stylesheet" href="css/authorized.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Добро пожаловать, ТИМА БОВТ!</h1>
+        <p class="status">Ваш статус: Легенда</p>
+        
+        <div class="video-container">
+            <div class="loader" id="videoLoader"></div>
+            <video id="videoPlayer" controls muted preload="auto" style="display: none;">
+                <source src="bovt.mp4" type="video/mp4">
+                Ваш браузер не поддерживает видео тег.
+            </video>
+        </div>
+        
+        <div class="user-info">
+            <p><i class="fa fa-user"></i> Пользователь: ТИМА БОВТ</p>
+            <p><i class="fa fa-star"></i> Уровень доступа: Администратор</p>
+            <p><i class="fa fa-clock-o"></i> Последний вход: только что</p>
+        </div>
+        
+        <div class="controls">
+            <button class="btn" id="backBtn">
+                <i class="fa fa-arrow-left"></i> Вернуться на главную
+            </button>
+            <button class="btn" onclick="location.reload()">
+                <i class="fa fa-refresh"></i> Перезагрузить видео
+            </button>
+        </div>
+    </div>
+
+    <script src="js/authorized.js"></script>
+</body>
+</html>
